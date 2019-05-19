@@ -7,11 +7,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.net.URI;
 
+import com.google.gson.Gson;
 import org.ini4j.Ini;
 import org.ini4j.IniPreferences;
 
-import static spark.Spark.get;
-import static spark.Spark.staticFileLocation;
 import spark.ModelAndView;
 import spark.template.freemarker.FreeMarkerEngine;
 
@@ -25,6 +24,8 @@ import org.apache.http.util.EntityUtils;
 
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+
+import static spark.Spark.*;
 
 
 public final class StripeOAuthSpark2App {
@@ -109,5 +110,18 @@ public final class StripeOAuthSpark2App {
                 return new ModelAndView(viewObjects, "error.ftl");
             }
         }, new FreeMarkerEngine());
+
+
+        // example reference https://www.baeldung.com/spark-framework-rest-api
+        post("/users", (request, response) -> {
+            response.type("application/json");
+            User user = new Gson().fromJson(request.body(), User.class);
+//            userService.addUser(user);
+
+//            return "my_test_message";
+            return new Gson().toJson(user);
+//            return new Gson()
+//                    .toJson(new StandardResponse(StatusResponse.SUCCESS, new Gson().toJson(user)));
+        });
     }
 }

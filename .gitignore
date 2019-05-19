@@ -1,5 +1,8 @@
 # Mac
 .DS_Store
 
+# IDE
+# stripe-oauth-spark2/.idea/
+
 # Maven
 target/
